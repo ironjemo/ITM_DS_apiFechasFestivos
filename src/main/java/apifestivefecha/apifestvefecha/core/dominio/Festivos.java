@@ -1,5 +1,8 @@
 package apifestivefecha.apifestvefecha.core.dominio;
 
+import java.time.LocalDate;
+//import java.util.List;
+
 import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,7 +14,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "dias")
+@Table(name = "festivo")
 public class Festivos {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO,generator = "secuencia_festivos")
@@ -20,16 +23,17 @@ public class Festivos {
     @Column(name = "id")
     private int id;
 
+    @Column(name = "nombre", length = 100, unique = true)
+    private String nombre;
+
+
     @Column(name = "dia")
     private int dia;
 
     @Column(name = "mes")
     private int mes;
 
-    @Column(name = "nombre", length = 100, nullable = false)
-    private String nombre;
-
-    @Column(name = "dia pascua")
+    @Column(name = "diaspascua")
     private int pascua;
 
 
@@ -97,6 +101,13 @@ public class Festivos {
         this.pascua = pascua;
     }
 
+    //public static boolean isEmpty() {
+        // TODO Auto-generated method stub
+        //throw new UnsupportedOperationException("Unimplemented method 'isEmpty'");
+}
+
+  
+
     
 
-}
+

@@ -8,14 +8,10 @@ public interface IFestivoServicio {
 // estos metodos estaran sujetos a modificacion estan por defecto
 
     public List<Festivos> listar();
+
+    public Festivos buscar(int dia,int mes);
  
-    public Festivos obtener(int id);
- 
-    public List<Festivos> buscar(String nombre);
- 
-    public Festivos agregar(Festivos Festivos);
- 
-    public Festivos modificar(Festivos Festivos);
- 
-    public boolean eliminar(int id);
+    public boolean aprobarFestivo(int dia,int mes);
+    
+   // Festivos buscarPorAnio(int anio);
 }

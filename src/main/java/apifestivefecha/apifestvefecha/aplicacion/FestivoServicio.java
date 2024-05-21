@@ -1,5 +1,7 @@
 package apifestivefecha.apifestvefecha.aplicacion;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -13,39 +15,84 @@ public class FestivoServicio implements IFestivoServicio{
 
     private IFestivosRepositorio repositorio;
 
+     public FestivoServicio(IFestivosRepositorio repositorio) {
+        this.repositorio = repositorio;
+    }
+
      @Override
      public List<Festivos> listar() {
        return repositorio.findAll();
      }
 
-     @Override
-     public Festivos obtener(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'obtener'");
-     }
 
      @Override
-     public List<Festivos> buscar(String nombre) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscar'");
-     }
+    public Festivos buscar(int dia,int mes) {
+        return repositorio.findByDiaAndMes( dia, mes);
 
-     @Override
-     public Festivos agregar(Festivos Festivos) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'agregar'");
     }
 
+    //@Override
+    //public boolean aprobarFestivo (int dia,int mes) {
+
+        //return repositorio.findByDiaAndMes( dia, mes) != null;
+    //}
     @Override
-    public Festivos modificar(Festivos Festivos) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'modificar'");
-    }
+    public boolean aprobarFestivo(int dia, int mes) {
+        Festivos festivo = repositorio.findByDiaAndMes(dia, mes);
 
-    @Override
-    public boolean eliminar(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'eliminar'");
-    }
+        if (festivo != null && festivo.getIdtipo().getId() == 1) {
+            return true; // Es un festivo fijo
+        } else {
+            List<Festivos> todosLosFestivos = repositorio.findAll();
+            for (Festivos f : todosLosFestivos) {
+                if (f.getIdtipo().getId() == 2) {
+                    Date fechaFestivo = ServicioFechas.createDate(f.getDia(), f.getMes());
+                    Date siguienteLunes = ServicioFechas.siguienteLunes(fechaFestivo);
+
+                    Calendar calendario = Calendar.getInstance();
+                    calendario.setTime(siguienteLunes);
+                    int diaLunes = calendario.get(Calendar.DAY_OF_MONTH);
+                    int mesLunes = calendario.get(Calendar.MONTH) + 1; // Mes en Calendar es 0-indexed
+                    if (diaLunes == dia && mesLunes == mes) {
+                        return true;
+                    } else if (f.getIdtipo().getId() == 3) {
+                        //Calendar calendario = Calendar.getInstance();
+                        int año = calendario.get(Calendar.YEAR);
+                        Date domingoPascua = ServicioFechas.agregarDias(ServicioFechas.getDomingoRamos(año), 7);
+                         fechaFestivo = ServicioFechas.agregarDias(domingoPascua, f.getPascua());
     
+                        calendario.setTime(fechaFestivo);
+                        int diaFestivo = calendario.get(Calendar.DAY_OF_MONTH);
+                        int mesFestivo = calendario.get(Calendar.MONTH) + 1; // Mes en Calendar es 0-indexed
+                        if (diaFestivo == dia && mesFestivo == mes) {
+                            return true;
+                        }
+                    } else if (f.getIdtipo().getId() == 4) {
+                        int año = calendario.get(Calendar.YEAR);
+                        Date domingoPascua = ServicioFechas.agregarDias(ServicioFechas.getDomingoRamos(año), 7);
+                        fechaFestivo = ServicioFechas.siguienteLunes(ServicioFechas.agregarDias(domingoPascua, f.getPascua()));
+        
+                        calendario.setTime(fechaFestivo);
+                        int diaFestivo = calendario.get(Calendar.DAY_OF_MONTH);
+                        int mesFestivo = calendario.get(Calendar.MONTH) + 1; // Mes en Calendar es 0-indexed
+                        if (diaFestivo == dia && mesFestivo == mes) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    public Date createDate(int dia, int mes) {
+        // Crear una instancia de Calendar para obtener el año actual
+        Calendar calendario = Calendar.getInstance();
+
+        // Establecer la fecha según los parámetros
+        calendario.set(Calendar.MONTH, mes - 1); // Restar 1 porque los meses son base 0 en Calendar
+        calendario.set(Calendar.DAY_OF_MONTH, dia);
+        
+        // Obtener un objeto Date a partir del Calendar
+        return calendario.getTime();
+    }
 }
