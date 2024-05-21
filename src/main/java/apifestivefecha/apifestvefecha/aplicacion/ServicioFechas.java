@@ -24,9 +24,9 @@ public class ServicioFechas {
         dia=(dias-31);
         mes=4;
     }
-    //return new Date(año-1900,mes-1,dia);
-    //return null;
-    return null;
+    return new Date(año-1900,mes-1,dia);
+   
+   
    }
 
  public static Date agregarDias(Date fecha, int dias){

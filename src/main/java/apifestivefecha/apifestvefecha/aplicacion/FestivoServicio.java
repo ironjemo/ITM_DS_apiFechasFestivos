@@ -31,11 +31,7 @@ public class FestivoServicio implements IFestivoServicio{
 
     }
 
-    //@Override
-    //public boolean aprobarFestivo (int dia,int mes) {
-
-        //return repositorio.findByDiaAndMes( dia, mes) != null;
-    //}
+   
     @Override
     public boolean aprobarFestivo(int dia, int mes) {
         Festivos festivo = repositorio.findByDiaAndMes(dia, mes);
@@ -55,11 +51,12 @@ public class FestivoServicio implements IFestivoServicio{
                     int mesLunes = calendario.get(Calendar.MONTH) + 1; // Mes en Calendar es 0-indexed
                     if (diaLunes == dia && mesLunes == mes) {
                         return true;
-                    } else if (f.getIdtipo().getId() == 3) {
-                        //Calendar calendario = Calendar.getInstance();
+                    } }
+                    else if (f.getIdtipo().getId() == 3) {
+                        Calendar calendario = Calendar.getInstance();
                         int año = calendario.get(Calendar.YEAR);
                         Date domingoPascua = ServicioFechas.agregarDias(ServicioFechas.getDomingoRamos(año), 7);
-                         fechaFestivo = ServicioFechas.agregarDias(domingoPascua, f.getPascua());
+                         Date fechaFestivo = ServicioFechas.agregarDias(domingoPascua, f.getPascua());
     
                         calendario.setTime(fechaFestivo);
                         int diaFestivo = calendario.get(Calendar.DAY_OF_MONTH);
@@ -68,9 +65,10 @@ public class FestivoServicio implements IFestivoServicio{
                             return true;
                         }
                     } else if (f.getIdtipo().getId() == 4) {
+                        Calendar calendario = Calendar.getInstance();
                         int año = calendario.get(Calendar.YEAR);
                         Date domingoPascua = ServicioFechas.agregarDias(ServicioFechas.getDomingoRamos(año), 7);
-                        fechaFestivo = ServicioFechas.siguienteLunes(ServicioFechas.agregarDias(domingoPascua, f.getPascua()));
+                        Date fechaFestivo = ServicioFechas.siguienteLunes(ServicioFechas.agregarDias(domingoPascua, f.getPascua()));
         
                         calendario.setTime(fechaFestivo);
                         int diaFestivo = calendario.get(Calendar.DAY_OF_MONTH);
@@ -80,11 +78,13 @@ public class FestivoServicio implements IFestivoServicio{
                         }
                     }
                 }
+                
             }
+            return false;
         }
-        return false;
-    }
-    public Date createDate(int dia, int mes) {
+       
+    
+     public Date createDate(int dia, int mes) {
         // Crear una instancia de Calendar para obtener el año actual
         Calendar calendario = Calendar.getInstance();
 
