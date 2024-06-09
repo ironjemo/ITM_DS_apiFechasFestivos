@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ApifestvefechaApplication<apifestvefecha>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "apifestivefecha.apifestvefecha.ApifestvefechaApplication",
+            "projectName": "apifestvefecha",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
