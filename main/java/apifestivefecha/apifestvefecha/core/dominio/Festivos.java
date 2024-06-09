@@ -64,13 +64,7 @@ public class Festivos {
 
     // Metodos geters and seters
 
-    public Tipo getIdtipo() {
-        return idtipo;
-    }
-
-    public void setIdtipo(Tipo idtipo) {
-        this.idtipo = idtipo;
-    }
+    
 
     public int getId() {
         return id;
@@ -112,7 +106,13 @@ public class Festivos {
         this.pascua = pascua;
     }
 
-    
+    public Tipo getIdtipo() {
+        return idtipo;
+    }
+
+    public void setIdtipo(Tipo idtipo) {
+        this.idtipo = idtipo;
+    }
     
 
     

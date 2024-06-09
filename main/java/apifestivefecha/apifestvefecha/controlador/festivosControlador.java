@@ -54,9 +54,11 @@ import apifestivefecha.apifestvefecha.core.interfaces.servicios.IFestivoServicio
     }*/
 
     @RequestMapping(value = "/aprobarFestivo/{dia}/{mes}", method = RequestMethod.GET)
- public Object aprobarFestivo(@PathVariable int dia, @PathVariable int mes, @RequestParam int anio) {
-     boolean esFestivo = servicio.aprobarFestivo(dia, mes, anio);
-     boolean esFechaValida = ServicioFechas.esFechaValida(dia, mes, anio);
+     public Object aprobarFestivo(@PathVariable int dia, @PathVariable int mes, @RequestParam int anio) {
+        boolean esFestivo = servicio.aprobarFestivo(dia, mes, anio);
+    
+     
+        boolean esFechaValida = ServicioFechas.esFechaValida(dia, mes, anio);
     
      if (esFechaValida) {
          if (esFestivo) {

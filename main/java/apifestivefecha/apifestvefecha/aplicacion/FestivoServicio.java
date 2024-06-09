@@ -120,10 +120,11 @@ public boolean aprobarFestivo(int dia, int mes, int anio) {
                     return true;
                 }
             } else if (f.getIdtipo().getId() == 3) {
-                Calendar calendario = Calendar.getInstance();
-                Date domingoPascua = ServicioFechas.agregarDias(ServicioFechas.getDomingoRamos(anio), 7);
+           
+                Date domingoPascua = ServicioFechas.agregarDias(ServicioFechas.getDomingoRamos(anio),7);
                 Date fechaFestivo = ServicioFechas.agregarDias(domingoPascua, f.getPascua());
-
+                
+                Calendar calendario = Calendar.getInstance();
                 calendario.setTime(fechaFestivo);
                 int diaFestivo = calendario.get(Calendar.DAY_OF_MONTH);
                 int mesFestivo = calendario.get(Calendar.MONTH) + 1; // Mes en Calendar es 0-indexed
@@ -131,10 +132,11 @@ public boolean aprobarFestivo(int dia, int mes, int anio) {
                     return true;
                 }
             } else if (f.getIdtipo().getId() == 4) {
-                Calendar calendario = Calendar.getInstance();
+            
                 Date domingoPascua = ServicioFechas.agregarDias(ServicioFechas.getDomingoRamos(anio), 7);
                 Date fechaFestivo = ServicioFechas.siguienteLunes(ServicioFechas.agregarDias(domingoPascua, f.getPascua()));
 
+                Calendar calendario = Calendar.getInstance();
                 calendario.setTime(fechaFestivo);
                 int diaFestivo = calendario.get(Calendar.DAY_OF_MONTH);
                 int mesFestivo = calendario.get(Calendar.MONTH) + 1; // Mes en Calendar es 0-indexed
